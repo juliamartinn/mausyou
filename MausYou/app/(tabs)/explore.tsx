@@ -1,4 +1,4 @@
-import { useWindowDimensions, StyleSheet, Image, Platform } from 'react-native';
+import { useWindowDimensions, StyleSheet, Image, Platform, Alert } from 'react-native';
 
 // import { Collapsible } from '@/components/Collapsible';
 // import { ExternalLink } from '@/components/ExternalLink';
@@ -7,9 +7,12 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedInput } from '@/components/ThemedInput';
 import { IconSymbol } from '@/components/ui/IconSymbol';
+import React from 'react';
 
 export default function TabTwoScreen() {
   const { width } = useWindowDimensions();
+  const [userName, setUsername] = React.useState("Niemand")
+  const [mausName, setMausname] = React.useState("Niemand")
 
   return (
     <ParallaxScrollView
@@ -25,10 +28,20 @@ export default function TabTwoScreen() {
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Gather your gang</ThemedText>
       </ThemedView>
-      <ThemedText>Dieser User ist deine Maus (Stern Platzhalter)</ThemedText>
+      <ThemedText>{mausName} ist deine Maus (Stern Platzhalter)</ThemedText>
       <ThemedInput
           placeholder="Gib den Namen deiner Maus ein"
           type="rounded"
+          onSubmitEditing={async () => {
+            try {
+              const response = await fetch("http://185.250.249.46:3000/checkUser");
+              const json = await response.json();
+              setMausname(json.name);
+            } catch (error) {
+              console.error('Network error:', error);  // Detaillierte Fehlerausgabe in der Konsole
+              setMausname("Network request failed");
+            }
+          }}          
       />
 
       <ThemedText>Dein Name (Stern Platzhalter)</ThemedText>

@@ -12,6 +12,7 @@ export default function HomeScreen() {
       headerImage={
         <Image
         source={require('@/assets/images/mausis.png')}
+        style={{width: 500, height: 300}}
         />
       }>
       <ThemedView style={styles.titleContainer}>
@@ -20,7 +21,7 @@ export default function HomeScreen() {
       </ThemedView>
     
       <ThemedView style={styles.stepContainer}>
-        <Button title="MausYou"></Button>
+        <Button title = "MausYou" />
       </ThemedView>
 
       {/* <ThemedView style={styles.stepContainer}>
