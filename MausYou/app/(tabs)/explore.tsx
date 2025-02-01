@@ -34,7 +34,10 @@ export default function TabTwoScreen() {
           type="rounded"
           onSubmitEditing={async () => {
             try {
-              const response = await fetch("http://185.250.249.46:3000/checkUser");
+              // real world
+              // const response = await fetch("http://185.250.249.46:3000/checkUser");
+              // development
+              const response = await fetch("http://localhost:3000/mausyou/user_test");
               const json = await response.json();
               setMausname(json.name);
             } catch (error) {

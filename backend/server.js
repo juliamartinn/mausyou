@@ -1,10 +1,13 @@
 import express from 'express';
+import cors from 'cors';
 import { testUser, addUser } from './models/users.js'
 import { testRequest } from './models/missRequests.js'
 import { initDatabase } from './database.js'
 
-
 const app = express()
+
+// prevent error when using web access
+app.use(cors());
 
 
 /* -------- internet auftritt ---------------- */
