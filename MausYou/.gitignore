@@ -36,3 +36,6 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
+
+google-services.json
+mausyoupushservice-firebase-adminsdk-fbsvc-bbf49317a1.json

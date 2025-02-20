@@ -9,17 +9,18 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.juliamartinn.MausYou"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "googleServicesFile": "./google-services.json",
       "package": "com.juliamartinn.MausYou"
     },
     "web": {
-      "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
