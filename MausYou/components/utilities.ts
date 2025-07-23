@@ -17,6 +17,8 @@ export default async function sendPushNotification(expoPushToken: string, messag
     title: message.title || 'Hello!',
     body: message.body || 'This is a test notification.',
     data: message.data || {},
+    priority: "high",
+    channelId: "myChannel"
   };
 
   const response = await fetch('https://exp.host/--/api/v2/push/send', {

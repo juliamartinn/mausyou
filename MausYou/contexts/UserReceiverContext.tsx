@@ -1,8 +1,10 @@
 // contexts/PhaseContext.tsx
 import { registerForPushNotificationsAsync } from '@/components/Utilities';
-import { STORAGE_KEY_RECEIVER, STORAGE_KEY_USER } from '@/constants/Constants';
+import { STORAGE_KEY_OTHER_PUSHTOKEN, STORAGE_KEY_RECEIVER, STORAGE_KEY_USER } from '@/constants/Constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import * as Notifications from "expo-notifications";
+
 
 type UserReceiverContextType = {
   actualUser: string;
@@ -24,10 +26,18 @@ export const UserReceiverProvider = ({ children }: { children: ReactNode }) => {
   const [otherPushToken, setOtherPushtoken] = useState("");
 
   useEffect(() => {
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+        shouldShowBanner: true,
+        shouldShowList: true,
+      }),
+    });
       registerForPushNotificationsAsync()
         .then((token) => setYourPushtoken(token ?? ""))
         .catch((error: any) => setYourPushtoken(`${error}`));
-  
+
       return () => {
       };
     }, []);
@@ -37,6 +47,7 @@ export const UserReceiverProvider = ({ children }: { children: ReactNode }) => {
       try {
         const storedUser = await AsyncStorage.getItem(STORAGE_KEY_RECEIVER);
         const storedReceiver = await AsyncStorage.getItem(STORAGE_KEY_USER);
+        const storedOtherPushToken = await AsyncStorage.getItem(STORAGE_KEY_OTHER_PUSHTOKEN);
         if (storedUser) {
           setActualUser(storedUser);
         } else {
@@ -44,10 +55,16 @@ export const UserReceiverProvider = ({ children }: { children: ReactNode }) => {
           await AsyncStorage.setItem(STORAGE_KEY_USER, actualUser);
         }
         if (storedReceiver) {
-          setActualUser(storedReceiver);
+          setActualReceiver(storedReceiver);
         } else {
           // Falls noch nichts gespeichert: Defaultwert sichern
           await AsyncStorage.setItem(STORAGE_KEY_RECEIVER, actualUser);
+        }
+        if (storedOtherPushToken) {
+          setOtherPushtoken(storedOtherPushToken);
+        } else {
+          // Falls noch nichts gespeichert: Defaultwert sichern
+          await AsyncStorage.setItem(STORAGE_KEY_OTHER_PUSHTOKEN, otherPushToken);
         }
       } catch (err) {
         console.error('Fehler beim Laden der Benutzerconfig:', err);

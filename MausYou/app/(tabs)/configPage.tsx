@@ -11,6 +11,8 @@ import React from 'react';
 import { useUserReceiver } from '@/contexts/UserReceiverContext';
 import { backend_ips, developer_mode } from '@/constants/IPConfig';
 import { capitalizeFirstLetter } from '@/components/Utilities';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { STORAGE_KEY_OTHER_PUSHTOKEN, STORAGE_KEY_RECEIVER, STORAGE_KEY_USER } from '@/constants/Constants';
 
 export default function ConfigPage() {
   const { width } = useWindowDimensions();
@@ -40,7 +42,7 @@ export default function ConfigPage() {
         throw new Error(`HTTP Fehler! Status: ${response.status}`);
       }
 
-      const json = await response.json();
+      await AsyncStorage.setItem(STORAGE_KEY_USER, actualUser);
       Alert.alert('Erfolg', `Wurde gespeichert!`);
     } catch (error) {
       console.error('Fehler beim Speichern:', error);
@@ -71,6 +73,8 @@ export default function ConfigPage() {
 
       const json = await response.json();
       setOtherPushtoken(json.token)
+      await AsyncStorage.setItem(STORAGE_KEY_RECEIVER, actualReceiver);
+      await AsyncStorage.setItem(STORAGE_KEY_OTHER_PUSHTOKEN, json.token);
       Alert.alert('Erfolg', `Maus wurde gespeichert!`);
     } catch (error) {
       Alert.alert('Fehler', 'Benutzer existiert nicht');

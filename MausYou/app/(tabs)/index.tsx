@@ -34,24 +34,6 @@ interface TapEvent {
   };
 }
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => (
-    console.log("Notification received"),
-    {
-      shouldPlaySound: false,
-      shouldSetBadge: false,
-      shouldShowBanner: true,
-      shouldShowList: true,
-  }
-  ),
-  handleSuccess: async () => {
-    console.log("Success");
-  },
-  handleError: async () => {
-    console.log("Error");
-  },
-});
-
 
 export default function App() {
   const {actualUser, otherPushToken} = useUserReceiver()
