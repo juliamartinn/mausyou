@@ -32,11 +32,14 @@ export default function HowMuchDoYouMissMe() {
       <TextInput onChangeText={setText} value={text}></TextInput>
       
       <MausButton text="Send text 🐁" pressFunction={() => 
-        sendPushNotification(otherPushToken, {
+        {
+          sendPushNotification(otherPushToken, {
             title: `${capitalizeFirstLetter(actualUser)} sent you a text`,
             body: text,
             data: { nix: "nix" },
-        })} />
+          });
+          setText("");}
+        } />
 
 
     </ParallaxScrollView>
