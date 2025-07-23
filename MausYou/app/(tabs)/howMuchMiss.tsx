@@ -9,6 +9,7 @@ import sendPushNotification, { capitalizeFirstLetter } from '@/components/Utilit
 import { ExpoPushMessage } from '@/components/Models';
 import { useUserReceiver } from '@/contexts/UserReceiverContext';
 import { LinearGradient } from 'expo-linear-gradient';
+import MausButton from '@/components/MausButton';
 
 export default function HowMuchDoYouMissMe() {
   const [value, setValue] = useState(0.5);
@@ -63,14 +64,7 @@ export default function HowMuchDoYouMissMe() {
         onValueChange={setValue}
       />
 
-      <Pressable onPress={() => {
-        // Direkt deaktivieren
-        setButtonDisabled(false);
-
-        // Nach 500ms wieder aktivieren
-        setTimeout(() => {
-          setButtonDisabled(true);
-        }, 500);
+      <MausButton text="Send miss 🐁" pressFunction={() => {
         const message: ExpoPushMessage = {
           title: `${capitalizeFirstLetter(actualUser)} vermisst dich :/`,
           body: getSentMoodText(),
@@ -80,44 +74,7 @@ export default function HowMuchDoYouMissMe() {
           otherPushToken,
           message
         );
-      }}>
-        {!buttonDisabled && (
-        <LinearGradient
-          colors={["#dea7f3", "#ff99c0"]} // Innen -> Außen Farbverlauf
-          start={{ x: 0.5, y: 0.5 }} // Zentrum des Gradients
-          end={{ x: 1, y: 1 }} // Richtung nach außen
-          style={styles.mausyouButton}
-        >
-          <Text
-            style={{
-              fontSize: 24,
-              textAlign: "center",
-              fontWeight: "bold",
-            }}
-          >
-            🎉 Sent miss :D 🎉{" "}
-          </Text>
-        </LinearGradient>
-        )}
-        {buttonDisabled && (
-          <LinearGradient
-            colors={["#d1d1d1", "#c4c4c4"]} // Innen -> Außen Farbverlauf
-            start={{ x: 0.5, y: 0.5 }} // Zentrum des Gradients
-            end={{ x: 1, y: 1 }} // Richtung nach außen
-            style={styles.mausyouButton}
-          >
-            <Text
-              style={{
-                fontSize: 24,
-                textAlign: "center",
-                fontWeight: "bold",
-              }}
-            >
-              Send Miss! 🐁
-            </Text>
-          </LinearGradient>
-        )}
-      </Pressable>
+      }}/>
 
     </ParallaxScrollView>
   );

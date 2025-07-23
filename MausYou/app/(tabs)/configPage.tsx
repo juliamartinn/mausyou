@@ -13,6 +13,7 @@ import { backend_ips, developer_mode } from '@/constants/IPConfig';
 import { capitalizeFirstLetter } from '@/components/Utilities';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { STORAGE_KEY_OTHER_PUSHTOKEN, STORAGE_KEY_RECEIVER, STORAGE_KEY_USER } from '@/constants/Constants';
+import MausButton from '@/components/MausButton';
 
 export default function ConfigPage() {
   const { width } = useWindowDimensions();
@@ -102,7 +103,7 @@ export default function ConfigPage() {
           type="rounded"       
           onChangeText={(name) => setActualUser(name.trim().toLowerCase())}
       />
-      <Button title="Speichern" onPress={handleSaveUser} />
+      <MausButton text="Speichern" pressFunction={handleSaveUser} />
 
       <ThemedText>Deine Maus: {capitalizeFirstLetter(actualReceiver)}</ThemedText>
       <ThemedInput
@@ -111,7 +112,7 @@ export default function ConfigPage() {
           onChangeText={(name) => setActualReceiver(name.trim().toLowerCase())}
       />
 
-    <Button title="Speichern" onPress={handleSaveReceiver} />
+    <MausButton text="Speichern" pressFunction={handleSaveReceiver} />
     </ParallaxScrollView>
   );
 }

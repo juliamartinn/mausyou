@@ -8,11 +8,11 @@ import sendPushNotification, {capitalizeFirstLetter} from "@/components/Utilitie
 import { useUserReceiver } from "@/contexts/UserReceiverContext";
 import { TextInput } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
+import MausButton from "@/components/MausButton";
 
 export default function HowMuchDoYouMissMe() {
   const { actualUser, otherPushToken } = useUserReceiver();
   const [text, setText] = useState("");
-  const [buttonDisabled, setButtonDisabled] = useState(true);
 
   return (
     <ParallaxScrollView
@@ -29,73 +29,21 @@ export default function HowMuchDoYouMissMe() {
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Sende deiner Maus einen Text :D</ThemedText>
       </ThemedView>
-      <TextInput onChangeText={setText}></TextInput>
-      <Pressable
-        onPress={() => {
-          // Direkt deaktivieren
-          setButtonDisabled(false);
-
-          // Nach 500ms wieder aktivieren
-          setTimeout(() => {
-            setButtonDisabled(true);
-          }, 500);
-          console.log("Sending push to:", otherPushToken);
-          sendPushNotification(otherPushToken, {
+      <TextInput onChangeText={setText} value={text}></TextInput>
+      
+      <MausButton text="Send text 🐁" pressFunction={() => 
+        sendPushNotification(otherPushToken, {
             title: `${capitalizeFirstLetter(actualUser)} sent you a text`,
             body: text,
             data: { nix: "nix" },
-          });
-        }}
-      >
-        {!buttonDisabled && (
-          <LinearGradient
-            colors={["#dea7f3", "#ff99c0"]} // Innen -> Außen Farbverlauf
-            start={{ x: 0.5, y: 0.5 }} // Zentrum des Gradients
-            end={{ x: 1, y: 1 }} // Richtung nach außen
-            style={styles.mausyouButton}
-          >
-            <Text
-              style={{
-                fontSize: 24,
-                textAlign: "center",
-                fontWeight: "bold",
-              }}
-            >
-              🎉 Sent Text :D 🎉{" "}
-            </Text>
-          </LinearGradient>
-        )}
-        {buttonDisabled && (
-          <LinearGradient
-            colors={["#d1d1d1", "#c4c4c4"]} // Innen -> Außen Farbverlauf
-            start={{ x: 0.5, y: 0.5 }} // Zentrum des Gradients
-            end={{ x: 1, y: 1 }} // Richtung nach außen
-            style={styles.mausyouButton}
-          >
-            <Text
-              style={{
-                fontSize: 24,
-                textAlign: "center",
-                fontWeight: "bold",
-              }}
-            >
-              Send Text! 🐁
-            </Text>
-          </LinearGradient>
-        )}
-      </Pressable>
+        })} />
+
+
     </ParallaxScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  mausyouButton: {
-    height: 80,
-    alignContent: "center",
-    justifyContent: "center",
-    borderRadius: 10,
-    backgroundColor: "#fc0cf0",
-  },
   headerImage: {
     color: "#808080",
     bottom: -90,
