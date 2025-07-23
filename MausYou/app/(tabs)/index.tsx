@@ -8,7 +8,7 @@ import {
   Pressable,
   FlatList,
 } from "react-native";
-import { LinearGradient } from "react-native-linear-gradient";
+import { LinearGradient } from "expo-linear-gradient";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
@@ -17,7 +17,7 @@ import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { FlyingImage } from "./heart_animation";
+import { FlyingImage } from "../../components/heart_animation";
 
 interface ImageData {
   id: number;
@@ -36,10 +36,11 @@ Notifications.setNotificationHandler({
   handleNotification: async () => (
     console.log("Notification received"),
     {
-      shouldShowAlert: true,
       shouldPlaySound: false,
       shouldSetBadge: false,
-    }
+      shouldShowBanner: true,
+      shouldShowList: true,
+  }
   ),
   handleSuccess: async () => {
     console.log("Success");

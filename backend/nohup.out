@@ -1,0 +1,16 @@
+npm error code ENOENT
+npm error syscall open
+npm error path /home/mattes/package.json
+npm error errno -2
+npm error enoent Could not read package.json: Error: ENOENT: no such file or directory, open '/home/mattes/package.json'
+npm error enoent This is related to npm not being able to find a file.
+npm error enoent
+npm error A complete log of this run can be found in: /home/mattes/.npm/_logs/2025-01-12T12_44_23_090Z-debug-0.log
+npm error code ENOENT
+npm error syscall open
+npm error path /home/mattes/package.json
+npm error errno -2
+npm error enoent Could not read package.json: Error: ENOENT: no such file or directory, open '/home/mattes/package.json'
+npm error enoent This is related to npm not being able to find a file.
+npm error enoent
+npm error A complete log of this run can be found in: /home/mattes/.npm/_logs/2025-02-04T22_02_37_216Z-debug-0.log

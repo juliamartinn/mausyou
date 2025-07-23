@@ -40,6 +40,13 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.crop.circle.badge.xmark" color={color} />,
         }}
       />
+      <Tabs.Screen
+        name="howMuchMiss"
+        options={{
+          title: 'Miss Indicator',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="umbrella.fill" color={color} />,
+        }}
+      />
     </Tabs>
   );
 }
