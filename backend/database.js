@@ -1,7 +1,6 @@
 // database.js
 import { Sequelize } from 'sequelize';
 import { initUsers } from './models/users.js';
-import { initMissRequests } from './models/missRequests.js';
 
 export const my_sequelize = new Sequelize({
   dialect: 'sqlite',
@@ -12,7 +11,6 @@ export async function initDatabase() {
   try {
     // Initialisiere das Users-Modell
     initUsers(my_sequelize);
-    initMissRequests(my_sequelize); // Initialisiert MissRequests-Tabelle
 
     // Teste die Verbindung zur Datenbank
     await my_sequelize.authenticate();

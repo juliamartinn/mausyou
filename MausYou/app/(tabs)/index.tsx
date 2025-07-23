@@ -18,6 +18,8 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { FlyingImage } from "../../components/heart_animation";
+import { useUserReceiver } from "@/contexts/UserReceiverContext";
+import sendPushNotification, { capitalizeFirstLetter } from "@/components/Utilities";
 
 interface ImageData {
   id: number;
@@ -50,90 +52,14 @@ Notifications.setNotificationHandler({
   },
 });
 
-async function sendPushNotification(expoPushToken: string) {
-  const message = {
-    to: "token", // Julias token
-    sound: "default",
-    title: "Bescheid geben wenn du das siehst",
-    body: "Falls du das siehst, funktioniert senden von app zu app!",
-    data: { someData: "goes here" },
-    channelId: "default",
-  };
-
-  // await fetch('https://exp.host/--/api/v2/push/send', {
-  //   method: 'POST',
-  //   headers: {
-  //     Accept: 'application/json',
-  //     'Accept-encoding': 'gzip, deflate',
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify(message),
-  // });
-}
-
-function handleRegistrationError(errorMessage: string) {
-  alert(errorMessage);
-  throw new Error(errorMessage);
-}
-
-async function registerForPushNotificationsAsync() {
-  if (Platform.OS === "android") {
-    Notifications.setNotificationChannelAsync("myChannel", {
-      name: "myChannel",
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: "#FF231F7C",
-    });
-  }
-
-  if (Device.isDevice) {
-    const { status: existingStatus } =
-      await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== "granted") {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-    }
-    if (finalStatus !== "granted") {
-      handleRegistrationError(
-        "Permission not granted to get push token for push notification!"
-      );
-      return;
-    }
-    const projectId =
-      Constants?.expoConfig?.extra?.eas?.projectId ??
-      Constants?.easConfig?.projectId;
-    if (!projectId) {
-      handleRegistrationError("Project ID not found");
-    }
-    try {
-      const pushTokenString = (
-        await Notifications.getExpoPushTokenAsync({
-          projectId,
-        })
-      ).data;
-      console.log(pushTokenString);
-      return pushTokenString;
-    } catch (e: unknown) {
-      handleRegistrationError(`${e}`);
-    }
-  } else {
-    handleRegistrationError("Must use physical device for push notifications");
-  }
-}
 
 export default function App() {
-  const [expoPushToken, setExpoPushToken] = useState("");
-  const [notification, setNotification] = useState<
-    Notifications.Notification | undefined
-  >(undefined);
+  const {actualUser, otherPushToken} = useUserReceiver()
   const [images, setImages] = useState<{ id: number; x: number; y: number }[]>(
     []
   );
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const viewPos = useRef<View>(null)
-  const notificationListener = useRef<Notifications.EventSubscription>();
-  const responseListener = useRef<Notifications.EventSubscription>();
   const [viewPosition, setViewPosition] = useState({ x: 0, y: 0 });
 
   const handleLayout = (event: any) => {
@@ -152,32 +78,6 @@ export default function App() {
       setIsButtonDisabled(false);
     }, 6000);
   };
-
-  useEffect(() => {
-    registerForPushNotificationsAsync()
-      .then((token) => setExpoPushToken(token ?? ""))
-      .catch((error: any) => setExpoPushToken(`${error}`));
-
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        console.log("notification" + notification);
-        setNotification(notification);
-      });
-
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log("response" + response);
-      });
-
-    return () => {
-      notificationListener.current &&
-        Notifications.removeNotificationSubscription(
-          notificationListener.current
-        );
-      responseListener.current &&
-        Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }, []);
 
   return (
     <View
@@ -215,7 +115,11 @@ export default function App() {
               },
             };
             handleTap(pos);
-            await sendPushNotification(expoPushToken);
+            await sendPushNotification(otherPushToken, {
+              title: "Ganz viel Liebe ❤️",
+              body: `von ${capitalizeFirstLetter(actualUser)}`,
+              data: {}
+            });
           }
         }}
         style={({ pressed }) => [
@@ -239,7 +143,7 @@ export default function App() {
                 fontWeight: "bold",
               }}
             >
-              🎉 Happy Birthday 🎉{" "}
+              🎉 Sent love :D 🎉{" "}
             </Text>
           </LinearGradient>
         )}

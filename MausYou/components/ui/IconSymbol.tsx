@@ -13,7 +13,7 @@ const MAPPING = {
   'paperplane.fill': 'send',
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',
-  'person.crop.circle.badge.xmark': 'person-search',
+  'magnifyingglass': 'person-search',
   'heart': 'favorite-border',
   'umbrella.fill': 'umbrella',
 } as Partial<

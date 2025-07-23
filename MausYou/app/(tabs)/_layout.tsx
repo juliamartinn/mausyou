@@ -34,10 +34,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="configPage"
         options={{
           title: 'Maus Finder',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.crop.circle.badge.xmark" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="magnifyingglass" color={color} />,
         }}
       />
       <Tabs.Screen

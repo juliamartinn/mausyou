@@ -5,11 +5,13 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 import Slider from "@react-native-community/slider";
-import sendPushNotification from '@/components/utilities';
+import sendPushNotification, { capitalizeFirstLetter } from '@/components/Utilities';
 import { ExpoPushMessage } from '@/components/Models';
+import { useUserReceiver } from '@/contexts/UserReceiverContext';
 
 export default function HowMuchDoYouMissMe() {
   const [value, setValue] = useState(0.5);
+  const {actualUser, otherPushToken} = useUserReceiver();
 
   const getEmoji = () => {
     if (value < 0.33) return "😀";
@@ -22,6 +24,12 @@ export default function HowMuchDoYouMissMe() {
     if (value < 0.66) return "Ich vermiss Maus";
     return "Ich vermisse Maus seeehr :(";
   };
+
+  const getSentMoodText = () => {
+    if (value < 0.33) return "Aber ist okay...";
+    if (value < 0.66) return "sehr :(";
+    return "Ich vermisse dich sooooo ahhhhhhhhh :(";
+  }
 
   return (
     <ParallaxScrollView
@@ -49,27 +57,22 @@ export default function HowMuchDoYouMissMe() {
         step={0.01}
         minimumTrackTintColor="#9b59b6" // Lila
         maximumTrackTintColor="#e0d4f7"
-        // thumbTintColor="transparent" // Wir wollen nur das Emoji zeigen
         value={value}
         onValueChange={setValue}
       />
 
       <Button title='send' onPress={() => {
         const message: ExpoPushMessage = {
-          title: 'Hallo!',
-          body: getMoodText(),
+          title: `${capitalizeFirstLetter(actualUser)} vermisst dich :/`,
+          body: getSentMoodText(),
           data: { exactMissValue: value },
         };
         sendPushNotification(
-          'ExponentPushToken[vC7RjHAj1jIJOcNul9I9tz]',
+          otherPushToken,
           message
         );
       }}/>
 
-      {/* Emoji als Thumb */}
-      {/* <View style={[styles.thumb, { left: `${value * 100}%` }]}>
-        <Text style={{ fontSize: 30 }}>{getEmoji()}</Text>
-      </View> */}
     </ParallaxScrollView>
   );
 }

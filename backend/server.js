@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { testUser, addUser } from './models/users.js'
-import { createMissRequest, testRequest } from './models/missRequests.js'
+import { addUser, getUser } from './models/users.js'
 import { initDatabase } from './database.js'
 
 const app = express()
@@ -19,15 +18,8 @@ app.get('/mausyou', (req, res) => {
 
 /* ----------- api endpoints ----------------- */
 // user
-app.get('/mausyou/user_test', testUser);
 app.post('/mausyou/user/add', addUser);
-
-// maus you requests
-app.get('/mausyou/req_test', testRequest)
-
-// add maus yous
-app.post('/mausyou/add_mausyou', createMissRequest)
-
+app.post('/mausyou/user/get', getUser);
 
 
 /* ------- server starten -------------------- */
