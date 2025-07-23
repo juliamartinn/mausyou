@@ -100,7 +100,7 @@ export default function ConfigPage() {
       <ThemedInput
           placeholder="Gib deinen Namen ein"
           type="rounded"       
-          onChangeText={(name) => setActualUser(name.toLowerCase())}
+          onChangeText={(name) => setActualUser(name.trim().toLowerCase())}
       />
       <Button title="Speichern" onPress={handleSaveUser} />
 
@@ -108,7 +108,7 @@ export default function ConfigPage() {
       <ThemedInput
           placeholder="Gib den Mausnamen ein"
           type="rounded"
-          onChangeText={(name) => setActualReceiver(name.toLowerCase())}
+          onChangeText={(name) => setActualReceiver(name.trim().toLowerCase())}
       />
 
     <Button title="Speichern" onPress={handleSaveReceiver} />
