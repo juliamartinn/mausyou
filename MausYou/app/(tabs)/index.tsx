@@ -81,7 +81,7 @@ export default function App() {
         }
       >
         <ThemedView style={styles.titleContainer}>
-          <ThemedText type="title">Ahoi Bubu!</ThemedText>
+          <ThemedText type="title">Sende Bubu Liebe!</ThemedText>
           <HelloWave />
         </ThemedView>
       </ParallaxScrollView>
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
 
 //   // const sendMissRequest = async () => {
 //   //   try {
-//   //     const response = await fetch("http://185.250.249.46:3000/mausyou/add_mausyou", {
+//   //     const response = await fetch("http://185.250.249.46:3001/mausyou/add_mausyou", {
 //   //       method: 'POST',
 //   //       headers: {
 //   //         'Content-Type': 'application/json',

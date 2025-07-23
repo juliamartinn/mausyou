@@ -4,4 +4,4 @@ export const backend_ips = {
     production:"84.200.133.46"
 }
 
-export const developer_mode = true  
+export const developer_mode = false  

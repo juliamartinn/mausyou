@@ -23,7 +23,7 @@ export const UserReceiverProvider = ({ children }: { children: ReactNode }) => {
   const [actualUser, setActualUser] = useState("julia");
   const [actualReceiver, setActualReceiver] = useState("mattes");
   const [yourPushToken, setYourPushtoken] = useState("");
-  const [otherPushToken, setOtherPushtoken] = useState("");
+  const [otherPushToken, setOtherPushtoken] = useState("ExponentPushToken[zsa0JAHLAaLOsrVCR6Tf3W]");
 
   useEffect(() => {
     Notifications.setNotificationHandler({
@@ -45,8 +45,8 @@ export const UserReceiverProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const loadUserConfig = async () => {
       try {
-        const storedUser = await AsyncStorage.getItem(STORAGE_KEY_RECEIVER);
-        const storedReceiver = await AsyncStorage.getItem(STORAGE_KEY_USER);
+        const storedUser = await AsyncStorage.getItem(STORAGE_KEY_USER);
+        const storedReceiver = await AsyncStorage.getItem(STORAGE_KEY_RECEIVER);
         const storedOtherPushToken = await AsyncStorage.getItem(STORAGE_KEY_OTHER_PUSHTOKEN);
         if (storedUser) {
           setActualUser(storedUser);

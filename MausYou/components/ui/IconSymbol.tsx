@@ -16,6 +16,7 @@ const MAPPING = {
   'magnifyingglass': 'person-search',
   'heart': 'favorite-border',
   'umbrella.fill': 'umbrella',
+  'message.fill': 'chat',
 } as Partial<
   Record<
     import('expo-symbols').SymbolViewProps['name'],

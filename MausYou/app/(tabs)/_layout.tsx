@@ -34,17 +34,24 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="configPage"
-        options={{
-          title: 'Maus Finder',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="magnifyingglass" color={color} />,
-        }}
-      />
-      <Tabs.Screen
         name="howMuchMiss"
         options={{
           title: 'Miss Indicator',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="umbrella.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="sendALetter"
+        options={{
+          title: 'Send a text!',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="message.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="configPage"
+        options={{
+          title: 'Maus Finder',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="magnifyingglass" color={color} />,
         }}
       />
     </Tabs>

@@ -22,7 +22,7 @@ export const FlyingImage = ({ x, y }: { x: number; y: number; }) => {
 
   const IMAGE_SRC = [IMAGE_SRC_1, IMAGE_SRC_2, IMAGE_SRC_3][Math.floor(Math.random() * 3)];
 
-  const flyingDuration = Math.random() * 1000 + 3000;
+  const flyingDuration = Math.random() * 1000 + 3001;
 
   // Start the flying animation
   translateX.value = withTiming(finalX, { duration: flyingDuration, easing: Easing.out(Easing.quad) });

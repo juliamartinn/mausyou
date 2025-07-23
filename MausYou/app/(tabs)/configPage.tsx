@@ -27,7 +27,7 @@ export default function ConfigPage() {
 
     try {
       // add your push token to library
-      const response = await fetch(`http://${developer_mode ? backend_ips.develop : backend_ips.production}:3000/mausyou/user/add`, {
+      const response = await fetch(`http://${developer_mode ? backend_ips.develop : backend_ips.production}:3001/mausyou/user/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -57,7 +57,7 @@ export default function ConfigPage() {
     }
 
     try {
-      const response = await fetch(`http://${developer_mode ? backend_ips.develop : backend_ips.production}:3000/mausyou/user/get`, {
+      const response = await fetch(`http://${developer_mode ? backend_ips.develop : backend_ips.production}:3001/mausyou/user/get`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -89,12 +89,12 @@ export default function ConfigPage() {
         <IconSymbol
           size={310}
           color="#808080" 
-          name="person.crop.circle.badge.xmark"
+          name="magnifyingglass"
           style={styles.headerImage}
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Ein mausiges Wilkommen! Wir haben dich vermaust!</ThemedText>
+        <ThemedText type="title">Gib dir einen Namen und finde deine Maus</ThemedText>
       </ThemedView>
       <ThemedText>Dein Name: {capitalizeFirstLetter(actualUser)}</ThemedText>
       <ThemedInput
