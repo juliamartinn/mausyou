@@ -3,17 +3,15 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Button, Pressable } from "react-native";
+import { Text, StyleSheet } from "react-native";
 import Slider from "@react-native-community/slider";
 import sendPushNotification, { capitalizeFirstLetter } from '@/components/Utilities';
 import { ExpoPushMessage } from '@/components/Models';
 import { useUserReceiver } from '@/contexts/UserReceiverContext';
-import { LinearGradient } from 'expo-linear-gradient';
 import MausButton from '@/components/MausButton';
 
 export default function HowMuchDoYouMissMe() {
   const [value, setValue] = useState(0.5);
-  const [buttonDisabled, setButtonDisabled] = useState(true);
   const {actualUser, otherPushToken} = useUserReceiver();
 
   const getEmoji = () => {
@@ -114,13 +112,7 @@ const styles = StyleSheet.create({
     color: "#5e2a84",
   },
   slider: {
-    width: "90%",
     height: 40,
-    borderRadius: 20,
-  },
-  thumb: {
-    position: "absolute",
-    bottom: 45,
-    transform: [{ translateX: -15 }], // damit es mittig ist
+    width: "90%",
   },
 });
