@@ -10,7 +10,12 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.juliamartinn.MausYou"
+      "bundleIdentifier": "com.juliamartinn.MausYou",
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -18,13 +23,23 @@
         "backgroundColor": "#ffffff"
       },
       "googleServicesFile": "./google-services.json",
-      "package": "com.juliamartinn.MausYou"
+      "package": "com.juliamartinn.MausYou",
+      "usesCleartextTraffic": true
     },
     "web": {
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
+      "expo-build-properties",
+      {
+        "android": {
+          "usesCleartextTraffic": true
+        },
+        "ios": {
+          "flipper": true
+        }
+      },
       "expo-router",
       [
         "expo-splash-screen",
