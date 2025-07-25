@@ -20,10 +20,10 @@ type UserReceiverContextType = {
 const UserReceiverContext = createContext<UserReceiverContextType | undefined>(undefined);
 
 export const UserReceiverProvider = ({ children }: { children: ReactNode }) => {
-  const [actualUser, setActualUser] = useState("julia");
-  const [actualReceiver, setActualReceiver] = useState("mattes");
+  const [actualUser, setActualUser] = useState("");
+  const [actualReceiver, setActualReceiver] = useState("");
   const [yourPushToken, setYourPushtoken] = useState("");
-  const [otherPushToken, setOtherPushtoken] = useState("ExponentPushToken[zsa0JAHLAaLOsrVCR6Tf3W]");
+  const [otherPushToken, setOtherPushtoken] = useState("");
 
   useEffect(() => {
     Notifications.setNotificationHandler({

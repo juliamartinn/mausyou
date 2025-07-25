@@ -3,7 +3,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import React, { useState } from "react";
-import { Text, StyleSheet } from "react-native";
+import { Text, StyleSheet, Image } from "react-native";
 import Slider from "@react-native-community/slider";
 import sendPushNotification, { capitalizeFirstLetter } from '@/components/Utilities';
 import { ExpoPushMessage } from '@/components/Models';
@@ -36,11 +36,13 @@ export default function HowMuchDoYouMissMe() {
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
       headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080" 
-          name="umbrella.fill"
-          style={styles.headerImage}
+        <Image
+          source={
+            actualUser=="maus" 
+              ? require("@/assets/images/julia_unhappy.jpg")
+              : require("@/assets/images/mattes_unhappy.jpg")
+            }
+          style={{ width: "100%", height: 300 }}
         />
       }>
       <ThemedView style={styles.titleContainer}>

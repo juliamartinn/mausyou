@@ -2,16 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import {
   Text,
   View,
-  Button,
-  Platform,
-  TouchableHighlight,
   Pressable,
-  FlatList,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Device from "expo-device";
-import * as Notifications from "expo-notifications";
-import Constants from "expo-constants";
 import { Image, StyleSheet, Alert } from "react-native";
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
