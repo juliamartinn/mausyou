@@ -1,13 +1,11 @@
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { IconSymbol } from "@/components/ui/IconSymbol";
 import React, { useState } from "react";
 import { StyleSheet, Image } from "react-native";
 import sendPushNotification, {capitalizeFirstLetter} from "@/components/Utilities";
 import { useUserReceiver } from "@/contexts/UserReceiverContext";
 import { TextInput } from "react-native-paper";
-import { LinearGradient } from "expo-linear-gradient";
 import MausButton from "@/components/MausButton";
 
 export default function HowMuchDoYouMissMe() {

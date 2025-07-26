@@ -1,7 +1,6 @@
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
 import React, { useState } from "react";
 import { Text, StyleSheet, Image } from "react-native";
 import Slider from "@react-native-community/slider";

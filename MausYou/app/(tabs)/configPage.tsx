@@ -6,7 +6,6 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedInput } from '@/components/ThemedInput';
-import { IconSymbol } from '@/components/ui/IconSymbol';
 import React, { useState } from 'react';
 import { useUserReceiver } from '@/contexts/UserReceiverContext';
 import { backend_ips, developer_mode } from '@/constants/IPConfig';
@@ -14,6 +13,8 @@ import { capitalizeFirstLetter } from '@/components/Utilities';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { STORAGE_KEY_OTHER_PUSHTOKEN, STORAGE_KEY_RECEIVER, STORAGE_KEY_USER } from '@/constants/Constants';
 import MausButton from '@/components/MausButton';
+import axios from "axios";
+
 
 export default function ConfigPage() {
   const { width } = useWindowDimensions();
@@ -30,20 +31,18 @@ export default function ConfigPage() {
 
     try {
       // add your push token to library
-      const response = await fetch(`http://${developer_mode ? backend_ips.develop : backend_ips.production}:3001/mausyou/user/add`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
+      const response = await axios.post(
+        `http://${developer_mode ? backend_ips.develop : backend_ips.production}:3001/mausyou/user/add`,
+        {
           name: confUser.trim().toLowerCase(),
           expoPushToken: yourPushToken
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP Fehler! Status: ${response.status}`);
-      }
+        },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
 
       setActualUser(confUser.trim().toLowerCase())
       await AsyncStorage.setItem(STORAGE_KEY_USER, confUser.trim().toLowerCase());
@@ -55,39 +54,56 @@ export default function ConfigPage() {
     }
   };
 
+
   const handleSaveReceiver = async () => {
     if (!confReceiver) {
-      Alert.alert('Fehler', 'Bitte den Namen deiner Maus eingeben');
+      Alert.alert("Fehler", "Bitte den Namen deiner Maus eingeben");
       return;
     }
 
     try {
-      const response = await fetch(`http://${developer_mode ? backend_ips.develop : backend_ips.production}:3001/mausyou/user/get`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
+      const response = await axios.post(
+        `http://${developer_mode ? backend_ips.develop : backend_ips.production}:3001/mausyou/user/get`,
+        {
           name: confReceiver.trim().toLowerCase(),
-        })
-      });
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      if (!response.ok) {
-        throw new Error(`User does not exist. Status: ${response.status}`);
+      const json = response.data; // Axios parsed JSON automatisch
+
+      setOtherPushtoken(json.token);
+      setActualReceiver(confReceiver.trim().toLowerCase());
+      await AsyncStorage.setItem(
+        STORAGE_KEY_RECEIVER,
+        confReceiver.trim().toLowerCase()
+      );
+      await AsyncStorage.setItem(STORAGE_KEY_OTHER_PUSHTOKEN, json.token);
+
+      setConfReceiver("");
+      Alert.alert("Erfolg", "Maus wurde gespeichert!");
+
+    } catch (error : any) {
+      console.error("Fehler beim Abrufen des Users:", error);
+
+      // Axios unterscheidet genauer:
+      if (error.response) {
+        console.log("Server-Fehler:", error.response.status, error.response.data);
+      } else if (error.request) {
+        console.log("Keine Antwort vom Server:", error.request);
+      } else {
+        console.log("Fehler beim Aufsetzen der Anfrage:", error.message);
       }
 
-      const json = await response.json();
-      setOtherPushtoken(json.token)
-      setActualReceiver(confReceiver.trim().toLowerCase())
-      await AsyncStorage.setItem(STORAGE_KEY_RECEIVER, confReceiver.trim().toLowerCase());
-      await AsyncStorage.setItem(STORAGE_KEY_OTHER_PUSHTOKEN, json.token);
-      setConfReceiver("")
-      Alert.alert('Erfolg', `Maus wurde gespeichert!`);
-    } catch (error) {
-      Alert.alert('Fehler', 'Benutzer existiert nicht');
-      setActualReceiver("")
+      Alert.alert("Fehler", "Benutzer existiert nicht");
+      setActualReceiver("");
     }
   };
+
   
   return (
     <ParallaxScrollView
