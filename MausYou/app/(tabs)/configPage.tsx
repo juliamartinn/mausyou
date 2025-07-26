@@ -50,7 +50,7 @@ export default function ConfigPage() {
       Alert.alert('Erfolg', `Wurde gespeichert!`);
     } catch (error) {
       console.error('Fehler beim Speichern:', error);
-      Alert.alert('Fehler', 'Daten konnten nicht gespeichert werden.');
+      Alert.alert('Fehler', 'Daten konnten nicht gespeichert werden.'+error);
     }
   };
 
@@ -144,6 +144,14 @@ export default function ConfigPage() {
       />
 
     <MausButton text="Speichern" pressFunction={handleSaveReceiver} />
+    <MausButton text='Test Request' pressFunction={
+      () => axios.get("https://jsonplaceholder.typicode.com/posts/1")
+        .then(response => {
+          Alert.alert("HTTPS Test Response:", response.data.title);
+        })
+        .catch(error => {
+          Alert.alert("HTTPS Test Error:", error.message);
+        })} />
     </ParallaxScrollView>
   );
 }
