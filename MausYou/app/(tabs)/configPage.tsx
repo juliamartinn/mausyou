@@ -32,7 +32,7 @@ export default function ConfigPage() {
     try {
       // add your push token to library
       const response = await axios.post(
-        `http://${developer_mode ? backend_ips.develop : backend_ips.production}:3001/mausyou/user/add`,
+        `${developer_mode ? backend_ips.develop : backend_ips.production}/mausyou/user/add`,
         {
           name: confUser.trim().toLowerCase(),
           expoPushToken: yourPushToken
@@ -63,7 +63,7 @@ export default function ConfigPage() {
 
     try {
       const response = await axios.post(
-        `http://${developer_mode ? backend_ips.develop : backend_ips.production}:3001/mausyou/user/get`,
+        `${developer_mode ? backend_ips.develop : backend_ips.production}/mausyou/user/get`,
         {
           name: confReceiver.trim().toLowerCase(),
         },
@@ -144,14 +144,14 @@ export default function ConfigPage() {
       />
 
     <MausButton text="Speichern" pressFunction={handleSaveReceiver} />
-    <MausButton text='Test Request' pressFunction={
+    {/* <MausButton text='Test Request' pressFunction={
       () => axios.get("https://jsonplaceholder.typicode.com/posts/1")
         .then(response => {
           Alert.alert("HTTPS Test Response:", response.data.title);
         })
         .catch(error => {
           Alert.alert("HTTPS Test Error:", error.message);
-        })} />
+        })} /> */}
     </ParallaxScrollView>
   );
 }

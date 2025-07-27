@@ -11,7 +11,7 @@ app.use(express.json());
 
 
 /* -------- internet auftritt ---------------- */
-app.get('/mausyou', (req, res) => {
+app.get('/', (req, res) => {
     res.status(200)
     res.send("maus you <3")
 })

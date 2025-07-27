@@ -1,7 +1,7 @@
 
 export const backend_ips = {
-    develop: "172.20.10.2",
-    production:"84.200.133.46"
+    develop: "http://172.20.10.2:3001",
+    production:"https://mausyou.activitinder.de"
 }
 
 export const developer_mode = false  
