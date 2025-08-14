@@ -48,6 +48,13 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="fotoecke"
+        options={{
+          title: 'Fotoecke',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="eye.slash" color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="configPage"
         options={{
           title: 'Maus Finder',

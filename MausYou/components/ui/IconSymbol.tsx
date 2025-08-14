@@ -17,6 +17,7 @@ const MAPPING = {
   'heart': 'favorite-border',
   'umbrella.fill': 'umbrella',
   'message.fill': 'chat',
+  'eye.slash': 'visibility-off',
 } as Partial<
   Record<
     import('expo-symbols').SymbolViewProps['name'],
